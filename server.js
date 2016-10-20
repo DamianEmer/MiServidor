@@ -1,4 +1,6 @@
 //cargando el modulo http = "";
+//cargando la libreria mime
+var mime = require("mime");
 var colors = require('colors');
 var http = require ( "http");
 //cargamdo libreria path +
@@ -77,7 +79,9 @@ var server = http.createServer(function(req, res){
     var extname = path.extname(urlPath);
    //antes del switch ...... res.end(`> extension a servir: ${extname}`);
     //seleccionar en content ttpe 
-    var contentType = 'text/plane'
+    var contentType = mime.lookup(urlPath); //CAMBIANDO POR SWITCH .....todo lo de static es publico al cliente
+    
+    /*'text/plane'
     switch(extname){
         case '.html':
         contentType = 'text/html';
@@ -89,7 +93,7 @@ var server = http.createServer(function(req, res){
         case '.css':
         contentType = 'text/css';
         break;
-    };
+    };*/
 
     fs.exists(urlPath,function(exists){
         if(!exists){
