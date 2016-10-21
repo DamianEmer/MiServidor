@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <link rel="styleSheet" href="css/site.css">
+        <!---CARGANDO ESTILOS DE SWEETALERT ---->
+        <link rel="styleSheet" href="vendor/sweetalert/dist/sweetalert.css">
         <title>MI SITIO WEB</title>
     </head>
-    <body onload="saludar()">
+    <body >
         <h1>Hola</h1>
         <p>
             Soy Damian estudiante de programacion en javascript<br>
@@ -19,15 +21,34 @@
             <li>programacion</li>
             <li>Deporte</li>
         </ol>
-        <p>visitas: entradas de hoy: </p>
-
-        <h2>Mi imagen de img</h2>
         <p>
-            <img src=".../img/Koala.jpg">
+            <button onclick="saludar()">SALUDAR</button>
+            visitas: entradas de hoy: </p>
+
+        <h2>Mi imagen </h2>
+        <p>
+            <img src="./img/Koala.jpg"
+            alt="Koala"
+            width="500">
         </p>
 
+        <h2>Mi video</h2>
+        <p>
+            <video src="./videos/Wildlife.wmv"
+            width="400"
+            height="300"
+            autoplay></video>
+        </p>
+
+         <h2>Mi audio</h2>
+        <p>
+            <audio src="./music/Sleep Away.mp3"
+            control autoplay loop></audio>
+        </p>
         <!-CARGANDO SCRIPT--->
+        <!-CARGANDO SCRIPT de sweetalert--->
         <script src="js/site.js"></script> 
+        <script src="vendor/sweetalert/dist/sweetalert.min.js"></script>
     </body>
     </html>
 

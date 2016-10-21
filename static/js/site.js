@@ -1,3 +1,6 @@
 function saludar(){
-    alert("Bienvenido a mi sitio");
+    sweetAlert("Bienvenido a mi sitio");
 };
+
+
+///crear un enruteador 

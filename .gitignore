@@ -1,2 +1,5 @@
 # ignorando modulos externos  de node
 node_modules
+# ignorando modulos del frontejnd
+bower_components
+static/vendor

@@ -1,0 +1,24 @@
+{
+  "name": "prj-cookie",
+  "description": "creando mi package",
+  "main": "server.js",
+  "authors": [
+    "@damian"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sweetalert": "^1.1.3"
+  }
+}
