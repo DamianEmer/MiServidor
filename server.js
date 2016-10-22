@@ -1,6 +1,12 @@
 //cargando el modulo http = "";
 //cargando la libreria mime
 var mime = require("mime");
+//cargando servidor estatico
+var staticServer = require ("./internals/static-server.js");
+//cargando el manejador
+
+var handlers = require ("./internals/handlers");
+
 var colors = require('colors');
 var http = require ( "http");
 //cargamdo libreria path +
@@ -30,98 +36,27 @@ var PORT = config.PORT;
 
 var cont = 0;
 
+
+
 //creanndo el server 
 var server = http.createServer(function(req, res){
 
    //var cont = 0;
 
-    var urlPath = req.url;/// se queda el mismo y lo manejo por medio de un if 
-    
-    if (urlPath == '/'){// || urlPath == '/index.html'){
-        //GENERA UNA RUTA HACIA EL INDEX.HTML
-        urlPath = path.resolve(`./static/index.html`);
-        //res.end(`> se sirve ${urlPath}`);
-
-       /* urlPath = `./static/index.html`
-        fs.readFile(urlPath, 'utf8',function(err, content){
-            //cont +=1
-            if(err){
-                throw err;
-                //console.log("Hubo un error");
-            }   
-           res.writeHead(
-                200,
-                {
-                    'Content-Type': 'text/html',
-                    'Server':'Buho@0.0.2'
-                }
-            );
-            //res.write("<p>visitas el dia de hoy</p>"+cont)
-            cont++;
-            content = content.replace('visitas',cont.toString());
-            res.end(content);
-         })
-    }else{
-        res.writeHead(
-            200,
-            {
-                'Content-Type': 'text/html',
-                'Server': 'Buho@0.0.2' 
-            }
-        );
-        res.end('<marquee><h1 style="color: orange">EN CONSTRUCCION!!!</h1></marquee>');
-    */}else{
-        //GENERA UNA RUTA DENTRO DE STATIC
-        urlPath = path.resolve(config.STATIC_PATH + urlPath);//resolve concatenea las dos y crea una ruta completa de los archivos
-        //res.end(`> se sirve ${urlPath}`);
-    }
-    //EXTRAYENDO LA EXTENSION DE LO QUE VAMOS A SERVIR 
-    var extname = path.extname(urlPath);
-   //antes del switch ...... res.end(`> extension a servir: ${extname}`);
-    //seleccionar en content ttpe 
-    var contentType = mime.lookup(urlPath); //CAMBIANDO POR SWITCH .....todo lo de static es publico al cliente
-    
-    /*'text/plane'
-    switch(extname){
-        case '.html':
-        contentType = 'text/html';
-        break;
-        case '.js':
-        contentType = 'text/javascript';
-        break;
-
-        case '.css':
-        contentType = 'text/css';
-        break;
-    };*/
-
-    fs.exists(urlPath,function(exists){
-        if(!exists){
-            //no existe  ``
-            res.writeHead(404,{
-                'Content-Type': 'text/html' ///para estas comillas es alt + 39
-            })
-            res.end("<h1>404 NOT FOUND....:( </h1>");
+    var url = req.url;/// se queda el mismo y lo manejo por medio de un if 
+    console.log(`url solicitudes: ${url}`);
+    if(url == "/"){
+        url = "/index.html";
+    } //else{
+        if (typeof(handlers[url])=== `function`){
+            handlers[url](req, res);
         }else{
-            //si existe
-            //leemos el archivo y lo servimos....
-            //------------res.end(` ${urlPath} existe`);///estas comillas son alt + 96
-            fs.readFile(urlPath, function(err, content){
-                if(err){
-                    res.writeHead(500,{
-                        'Content-Type':'text/html'
-                    });
-                    res.end(`<h1 style="color:red">500 ERROR</h1>`);
-                }else{
-                    //si pudo leer el archivo...
-                    res.writeHead(200,{
-                        'Content-Type': contentType
-                    });
-                    res.end(content);
-                }
-            });
+            console.log("servimos estaticamente");
+            staticServer.serve(url, res);
         }
-    });
+
+         
+    //}
 
     /*
     console.log(`> url solicitudes: ${urlPath}`.color);
@@ -149,5 +84,5 @@ var server = http.createServer(function(req, res){
     //server.listen(PORT, IP, function(){
         console.log("Server escuchando en "+
         `http://${IP}:${PORT}/....`);
-        console.log("Haciendo cambios con el servidor activado....Hola");
+        console.log("Haciendo cambios con el servidor activado...");
     });
